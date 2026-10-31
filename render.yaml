@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: nexusai-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DATABASE
+        value: nexusai
+      - key: CORS_ORIGINS
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 60
+      - key: LLM_API_BASE_URL
+        sync: false
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        sync: false
+      - key: LLM_CLASSIFICATION_MODEL
+        sync: false
+      - key: LLM_RESPONSE_MODEL
+        sync: false
+      - key: LLM_SUMMARY_MODEL
+        sync: false
+      - key: LLM_CHAT_MODEL
+        sync: false
+      - key: LLM_REQUEST_TIMEOUT_SECONDS
+        value: 25
+      - key: EMBEDDING_MODEL
+        value: text-embedding-3-small
+      - key: EMBEDDING_DIMENSIONS
+        value: 1536
+      - key: VECTOR_SEARCH_INDEX_NAME
+        sync: false
+      - key: KNOWLEDGE_TENANT_ID
+        value: default
+      - key: KNOWLEDGE_CHUNK_SIZE
+        value: 1200
+      - key: KNOWLEDGE_CHUNK_OVERLAP
+        value: 180
+      - key: KNOWLEDGE_TOP_K
+        value: 5
+      - key: KNOWLEDGE_MIN_SCORE
+        value: 0.65
+      - key: KNOWLEDGE_MAX_PDF_BYTES
+        value: 10485760
+      - key: KNOWLEDGE_MAX_EXTRACTED_CHARS
+        value: 500000
